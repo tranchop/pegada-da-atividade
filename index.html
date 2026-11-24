@@ -1,0 +1,269 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Pegada da Atividade</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: entradas em tabelas editaveis a esquerda, painel de resultado fixo a direita (no celular, resultado primeiro). */
+:root{
+  --bg:#f3f4ef; --surface:#ffffff; --fg:#1d2a24; --muted:#5d6b63; --line:#d9ddd3;
+  --accent:#1f6f5c; --accent-fg:#ffffff; --accent-soft:#e1efe9;
+  --c-transp:#c2573a; --c-lanche:#d9a21b; --c-energia:#3f7fb0; --c-material:#6f8f3a;
+  --good:#1f6f5c; --warn-bg:#fbf1d9; --warn-fg:#6b4d00;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --body:'Source Sans 3',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121a16; --surface:#1a2520; --fg:#e8eee9; --muted:#9fb0a6; --line:#2c3a33;
+  --accent:#58b79c; --accent-fg:#0d1511; --accent-soft:#1f3a31;
+  --c-transp:#e07a5c; --c-lanche:#e6b83e; --c-energia:#6aa6d6; --c-material:#93b65a;
+  --good:#58b79c; --warn-bg:#3a3017; --warn-fg:#f0d58a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121a16; --surface:#1a2520; --fg:#e8eee9; --muted:#9fb0a6; --line:#2c3a33;
+  --accent:#58b79c; --accent-fg:#0d1511; --accent-soft:#1f3a31;
+  --c-transp:#e07a5c; --c-lanche:#e6b83e; --c-energia:#6aa6d6; --c-material:#93b65a;
+  --good:#58b79c; --warn-bg:#3a3017; --warn-fg:#f0d58a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.45 var(--body);
+  padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto}
+h1{font:700 clamp(1.6rem,4vw,2.3rem)/1.1 var(--display);margin:0 0 6px;text-wrap:balance}
+h2{font:600 1.15rem/1.2 var(--display);margin:0}
+.lead{color:var(--muted);max-width:62ch;margin:0 0 20px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+.side{position:sticky;top:12px;display:grid;gap:12px;grid-column:2;grid-row:1}
+.main{display:grid;gap:16px;grid-column:1;grid-row:1;min-width:0}
+@media(max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}.side,.main{grid-column:1;grid-row:auto}.side{position:static}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 10px}
+.tag{font:500 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px}
+th{font:500 .72rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);text-align:left;padding:4px 6px}
+td{padding:3px 4px;vertical-align:middle}
+input,select,button{font:inherit;color:var(--fg)}
+input[type=number],select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-height:36px}
+input[type=number]{font-family:var(--mono);font-size:.9rem;min-width:62px}
+select{min-width:130px}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btn{background:transparent;border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;min-height:36px}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn.primary:hover{color:var(--accent-fg);filter:brightness(1.08)}
+.x{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:1.1rem;min-width:32px;min-height:36px}
+.x:hover{color:var(--c-transp)}
+.rowend{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px;flex-wrap:wrap}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.subtotal{font:500 .9rem var(--mono);color:var(--muted)}
+.big{font:700 2.6rem/1 var(--display);font-variant-numeric:tabular-nums}
+.big small{font:500 .9rem var(--mono);color:var(--muted);margin-left:6px}
+.kv{display:flex;justify-content:space-between;gap:8px;font-size:.92rem;padding:3px 0}
+.bar{height:10px;border-radius:5px;background:var(--bg);overflow:hidden;margin:2px 0 8px}
+.bar i{display:block;height:100%;border-radius:5px}
+.legend{display:flex;justify-content:space-between;font-size:.9rem;gap:8px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.opt{display:flex;gap:8px;align-items:flex-start;padding:5px 0;font-size:.93rem}
+.opt input{margin-top:4px;accent-color:var(--accent)}
+.delta{background:var(--accent-soft);border-radius:8px;padding:10px 12px;margin-top:8px}
+.delta b{color:var(--good)}
+.note{background:var(--warn-bg);color:var(--warn-fg);border-radius:8px;padding:8px 10px;font-size:.85rem;margin:8px 0 0}
+details{margin-top:4px}
+summary{cursor:pointer;font-weight:600}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:10px}
+.facts label{display:grid;gap:3px;font-size:.85rem;color:var(--muted)}
+.people{display:flex;gap:12px;flex-wrap:wrap}
+.people label{display:grid;gap:3px;font-size:.85rem;color:var(--muted);width:130px}
+.src{font-size:.82rem;color:var(--muted);margin:8px 0 0}
+.src a{color:var(--accent)}
+</style>
+
+<div class="wrap">
+  <h1>Pegada da Atividade</h1>
+  <p class="lead">Cada patrulha calcula junta quanto CO₂ equivalente a atividade de hoje emite: transporte de ida e volta, lanche, energia da sede e materiais. Os valores iniciais são um exemplo. Troque pelos dados reais da patrulha.</p>
+
+  <div class="grid">
+    <aside class="side" aria-live="polite">
+      <div class="card">
+        <div class="head"><h2>Resultado</h2><span class="tag">kg CO₂e</span></div>
+        <div class="big"><span id="total">0</span><small>kg CO₂e</small></div>
+        <div class="kv"><span>Por pessoa</span><b class="num" id="perperson">0</b></div>
+        <div class="kv"><span>Equivale a rodar de carro</span><b class="num" id="kmcar">0 km</b></div>
+        <div id="bars" style="margin-top:10px"></div>
+
+        <div id="warnppl"></div>
+      </div>
+      <button class="btn primary" id="copy">Copiar resumo</button>
+    </aside>
+
+    <div class="main">
+      <section class="card" id="sec-transp"></section>
+      <section class="card" id="sec-lanche"></section>
+      <section class="card" id="sec-energia"></section>
+      <section class="card" id="sec-material"></section>
+
+      <section class="card">
+        <details>
+          <summary>De onde vêm os números</summary>
+          <p class="src">Transporte: <a href="https://data.cnt.org.br/wp-content/uploads/2025/11/RadarCNTdoTransporteComparativosdeemissoesnotransporte.pdf" target="_blank" rel="noopener">CNT, Radar do Transporte 2025</a>. Carro a gasolina com 2 ocupantes e ônibus com 70 passageiros, só CO₂. Os valores por passageiro-km são conversões feitas para esta página (0,075 t por passageiro). Ônibus real costuma andar menos cheio, então o valor é otimista.</p>
+          <p class="src">Eletricidade: fator médio do sistema elétrico divulgado pelo MCTI (SIRENE), 0,0289 kg CO₂ por kWh em abril de 2025 (<a href="https://cenarioenergia.com.br/2025/06/13/brasil-reduz-intensidade-de-carbono-na-geracao-eletrica-com-inclusao-de-novas-renovaveis-na-base-de-calculo-oficial/" target="_blank" rel="noopener">Cenário Energia</a>). Varia por mês.</p>
+          <p class="note">Valores de alimentos, equipamentos e materiais são estimativas usuais da literatura (por exemplo Our World in Data e Poore &amp; Nemecek, 2018), não conferidas em fonte aberta. Use como estimativa didática.</p>
+        </details>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var F={car:0.112,bus:0.018,moto:0.039,grid:0.03};var CARKM=0.224;
+  var MODOS=['carro','ônibus','moto','a pé ou bicicleta'];
+  // [nome, gramas por porção, kg CO2e por kg]
+  var FOOD=[['Pão (50 g)',50,1.6],['Queijo (20 g)',20,24],['Presunto ou peito de peru (30 g)',30,8],['Frango (80 g)',80,10],['Carne bovina (80 g)',80,100],['Ovo (50 g)',50,4.7],['Leite (200 ml)',200,3.2],['Suco de fruta (200 ml)',200,1],['Fruta (100 g)',100,0.7],['Biscoito ou bolo (40 g)',40,2.5],['Chocolate (30 g)',30,46]];
+  // [nome, watts]
+  var ENERGY=[['Lâmpada LED',10],['Ventilador',60],['Caixa de som',20],['Notebook',50],['Projetor',200],['Carregador de celular',5],['Geladeira',100]];
+  // [nome, kg CO2e por unidade]
+  var MAT=[['Folha A4 impressa',0.005],['Copo plástico descartável',0.015],['Garrafa PET 500 ml',0.1],['Prato ou talher descartável',0.02],['Saco plástico',0.03],['Garrafa reutilizável',0]];
+  var MAX={p:50,km:500,q:1000,h:12};
+  var S={
+    tr:[{p:2,m:0,km:6},{p:1,m:1,km:8},{p:1,m:3,km:1}],
+    fo:[{i:0,p:4},{i:2,p:4},{i:7,p:4},{i:8,p:4}],
+    en:[{i:0,q:4,h:3},{i:1,q:1,h:3}],
+    ma:[{i:0,q:4},{i:1,q:4}]
+  };
+  var $=function(id){return document.getElementById(id)};
+  var nf=function(v,d){return new Intl.NumberFormat('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v)};
+  function num(v,max){v=parseFloat(String(v).replace(',','.'));if(!isFinite(v)||v<0)v=0;if(max!=null&&v>max)v=max;return v}
+  function opts(list,sel){return list.map(function(o,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+o[0]+'</option>'}).join('')}
+  function modeOpts(sel){return MODOS.map(function(o,i){return '<option value="'+i+'"'+(i===sel?' selected':'')+'>'+o+'</option>'}).join('')}
+
+  function calc(){
+    var tr=0,fo=0,en=0,ma=0;
+    S.tr.forEach(function(r){
+      var f=0;
+      if(r.m===0)f=F.car;
+      else if(r.m===1)f=F.bus;else if(r.m===2)f=F.moto;
+      tr+=r.p*2*r.km*f;
+    });
+    S.fo.forEach(function(r){var x=FOOD[r.i];fo+=x[1]/1000*r.p*x[2]});
+    S.en.forEach(function(r){en+=r.q*ENERGY[r.i][1]*r.h/1000*F.grid});
+    S.ma.forEach(function(r){ma+=r.q*MAT[r.i][1]});
+    return {tr:tr,fo:fo,en:en,ma:ma,total:tr+fo+en+ma};
+  }
+
+  function secHead(title,sub,tag){return '<div class="head"><h2>'+title+'</h2><span class="tag">'+tag+'</span></div><p class="sub">'+sub+'</p>'}
+  function rowx(k,i){return '<td><button class="x" data-del="'+k+'" data-i="'+i+'" aria-label="Remover linha">×</button></td>'}
+  function inp(k,i,f,v,max,step){return '<input type="number" inputmode="decimal" min="0" max="'+max+'" step="'+(step||1)+'" data-k="'+k+'" data-i="'+i+'" data-f="'+f+'" value="'+v+'">'}
+
+  function renderTr(){
+    var h=secHead('Transporte','Cada linha é um grupo que veio do mesmo jeito. O cálculo conta ida e volta.','ida e volta');
+    h+='<div class="tablewrap"><table><thead><tr><th>Pessoas</th><th>Como veio</th><th>Km (só ida)</th><th></th></tr></thead><tbody>';
+    S.tr.forEach(function(r,i){
+      h+='<tr><td>'+inp('tr',i,'p',r.p,MAX.p)+'</td>'+
+      '<td><select data-k="tr" data-i="'+i+'" data-f="m">'+modeOpts(r.m)+'</select></td>'+
+      '<td>'+inp('tr',i,'km',r.km,MAX.km,0.1)+'</td>'+
+      rowx('tr',i)+'</tr>';
+    });
+    h+='</tbody></table></div><div class="rowend"><button class="btn" data-add="tr">Adicionar linha</button><span class="subtotal" id="st-tr"></span></div>';
+    $('sec-transp').innerHTML=h;
+  }
+  function renderFo(){
+    var h=secHead('Lanche','Escolha o alimento e quantas pessoas comeram uma porção.','por alimento');
+    h+='<div class="tablewrap"><table><thead><tr><th>Alimento (porção)</th><th>Pessoas</th><th></th></tr></thead><tbody>';
+    S.fo.forEach(function(r,i){
+      h+='<tr><td><select data-k="fo" data-i="'+i+'" data-f="i">'+opts(FOOD,r.i)+'</select></td>'+
+      '<td>'+inp('fo',i,'p',r.p,MAX.p)+'</td>'+rowx('fo',i)+'</tr>';
+    });
+    h+='</tbody></table></div><div class="rowend"><button class="btn" data-add="fo">Adicionar alimento</button><span class="subtotal" id="st-fo"></span></div>';
+    $('sec-lanche').innerHTML=h;
+  }
+  function renderEn(){
+    var h=secHead('Energia da sede','Equipamentos ligados durante a atividade.','por equipamento');
+    h+='<div class="tablewrap"><table><thead><tr><th>Equipamento</th><th>Quantidade</th><th>Horas ligado</th><th></th></tr></thead><tbody>';
+    S.en.forEach(function(r,i){
+      h+='<tr><td><select data-k="en" data-i="'+i+'" data-f="i">'+opts(ENERGY,r.i)+'</select></td>'+
+      '<td>'+inp('en',i,'q',r.q,MAX.q)+'</td>'+
+      '<td>'+inp('en',i,'h',r.h,MAX.h,0.5)+'</td>'+rowx('en',i)+'</tr>';
+    });
+    h+='</tbody></table></div><div class="rowend"><button class="btn" data-add="en">Adicionar equipamento</button><span class="subtotal" id="st-en"></span></div>';
+    $('sec-energia').innerHTML=h;
+  }
+  function renderMa(){
+    var h=secHead('Materiais','Papel, descartáveis e embalagens usados na atividade.','por unidade');
+    h+='<div class="tablewrap"><table><thead><tr><th>Item</th><th>Quantidade</th><th></th></tr></thead><tbody>';
+    S.ma.forEach(function(r,i){
+      h+='<tr><td><select data-k="ma" data-i="'+i+'" data-f="i">'+opts(MAT,r.i)+'</select></td>'+
+      '<td>'+inp('ma',i,'q',r.q,MAX.q)+'</td>'+rowx('ma',i)+'</tr>';
+    });
+    h+='</tbody></table></div><div class="rowend"><button class="btn" data-add="ma">Adicionar item</button><span class="subtotal" id="st-ma"></span></div>';
+    $('sec-material').innerHTML=h;
+  }
+
+  function people(){return Math.max(1,S.tr.reduce(function(a,r){return a+r.p},0))}
+  function update(){
+    var b=calc(),n=people();
+    $('total').textContent=nf(b.total,1);
+    $('perperson').textContent=nf(b.total/n,2)+' kg';
+    $('kmcar').textContent=nf(b.total/CARKM,0)+' km';
+    var cats=[['Transporte',b.tr,'--c-transp'],['Lanche',b.fo,'--c-lanche'],['Energia',b.en,'--c-energia'],['Materiais',b.ma,'--c-material']];
+    $('bars').innerHTML=cats.map(function(c){
+      var pct=b.total?c[1]/b.total*100:0;
+      return '<div class="legend"><span><span class="dot" style="background:var('+c[2]+')"></span>'+c[0]+'</span><span class="num">'+nf(c[1],2)+' kg · '+nf(pct,0)+'%</span></div><div class="bar"><i style="width:'+pct+'%;background:var('+c[2]+')"></i></div>';
+    }).join('');
+    var st={tr:b.tr,fo:b.fo,en:b.en,ma:b.ma};
+    for(var k in st){var el=$('st-'+k);if(el)el.textContent='Subtotal: '+nf(st[k],2)+' kg CO₂e'}
+    $('warnppl').innerHTML='<p class="src">'+n+(n===1?' pessoa':' pessoas')+' na patrulha, contadas pelo transporte.</p>';
+  }
+
+  document.addEventListener('input',function(e){
+    var t=e.target;
+    if(!t.dataset||!t.dataset.k||t.tagName==='SELECT')return;
+    var f=t.dataset.f;
+    S[t.dataset.k][+t.dataset.i][f]=num(t.value,MAX[f]);
+    update();
+  });
+  document.addEventListener('change',function(e){
+    var t=e.target;
+    if(!t.dataset||!t.dataset.k)return;
+    var k=t.dataset.k,r=S[k][+t.dataset.i];
+    if(t.tagName==='SELECT'){
+      r[t.dataset.f]=+t.value;
+      if(k==='tr')renderTr();if(k==='fo')renderFo();if(k==='en')renderEn();if(k==='ma')renderMa();
+    }else{
+      var f=t.dataset.f,v=num(t.value,MAX[f]);
+      r[f]=v;t.value=v;
+    }
+    update();
+  });
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('button');if(!t)return;
+    if(t.dataset.del){S[t.dataset.del].splice(+t.dataset.i,1);redraw();return}
+    if(t.dataset.add){
+      var k=t.dataset.add;
+      var neu={tr:{p:1,m:0,km:5},fo:{i:0,p:people()},en:{i:0,q:1,h:3},ma:{i:0,q:1}}[k];
+      S[k].push(neu);redraw();return
+    }
+    if(t.id==='copy'){copy()}
+  });
+  function redraw(){renderTr();renderFo();renderEn();renderMa();update()}
+
+  function copy(){
+    var b=calc(),n=people();
+    var txt='Pegada de carbono da atividade: '+nf(b.total,1)+' kg CO2e'+(n?' ('+nf(b.total/n,2)+' kg por pessoa)':'')+'\n'+
+      'Transporte: '+nf(b.tr,2)+' kg\nLanche: '+nf(b.fo,2)+' kg\nEnergia: '+nf(b.en,2)+' kg\nMateriais: '+nf(b.ma,2)+' kg';
+    var btn=$('copy');
+    function ok(){btn.textContent='Resumo copiado';setTimeout(function(){btn.textContent='Copiar resumo'},1800)}
+    function fallback(){
+      var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+      try{document.execCommand('copy');ok()}catch(_){btn.textContent='Selecione e copie manualmente'}
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else fallback();
+  }
+
+  redraw();
+})();
+</script>
+
+</body></html>
